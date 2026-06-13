@@ -71,7 +71,7 @@ IV is the unique $\sigma^*$ satisfying $\text{BS}(S, K, T, r, \sigma^*) = C_{\te
 ## How to Run
 
 ```bash
-cd options-pricing-engine
+cd options_pricing
 pip install -r requirements.txt
 python main.py
 ```
