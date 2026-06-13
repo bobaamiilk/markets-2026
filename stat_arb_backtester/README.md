@@ -56,7 +56,7 @@ $$z_t = \frac{S_t - \mu_t^{(30)}}{\sigma_t^{(30)}}$$
 ## How to Run
 
 ```bash
-cd stat-arb-backtester
+cd stat_arb_backtester
 pip install -r requirements.txt
 python main.py
 ```

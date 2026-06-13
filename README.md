@@ -4,9 +4,9 @@ Three production-quality quantitative finance implementations covering volatilit
 
 | Project | Domain | Core Methods |
 |---|---|---|
-| `volatility-forecasting` | Risk / Vol | GARCH(1,1), EGARCH, VaR backtesting |
-| `stat-arb-backtester` | Alpha / Execution | Cointegration, z-score mean reversion, PnL attribution |
-| `options-pricing-engine` | Derivatives | Black-Scholes, Monte Carlo GBM, Greeks, IV solver |
+| `volatility_forecasting` | Risk / Vol | GARCH(1,1), EGARCH, VaR backtesting |
+| `stat_arb_backtester` | Alpha / Execution | Cointegration, z-score mean reversion, PnL attribution |
+| `options_pricing_engine` | Derivatives | Black-Scholes, Monte Carlo GBM, Greeks, IV solver |
 
 ## Structure
 
@@ -43,7 +43,7 @@ quant-projects/
 Each project is self-contained. Navigate into any subdirectory and follow its README.
 
 ```bash
-cd volatility-forecasting && pip install -r requirements.txt && python main.py
-cd stat-arb-backtester   && pip install -r requirements.txt && python main.py
-cd options-pricing-engine && pip install -r requirements.txt && python main.py
+cd volatility_forecasting && pip install -r requirements.txt && python main.py
+cd stat_arb_backtester   && pip install -r requirements.txt && python main.py
+cd options_pricing_engine && pip install -r requirements.txt && python main.py
 ```
