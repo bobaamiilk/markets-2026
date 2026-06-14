@@ -91,3 +91,7 @@ EGARCH typically achieves lower AIC/BIC due to leverage effect — confirmed by 
 - Risk modelling: parametric VaR, expanding-window backtesting, violation rate analysis
 - Numerical methods: MLE optimisation via `arch` library (BFGS / Nelder-Mead)
 - Python: `arch`, `pandas`, `numpy`, `scipy`, `matplotlib`
+
+# NOTE
+This project does not use live market data during execution.
+All datasets are pre-generated and stored locally.

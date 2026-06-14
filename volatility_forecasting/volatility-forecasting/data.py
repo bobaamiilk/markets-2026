@@ -1,30 +1,53 @@
-"""
-data.py — Market data loading and return computation.
-"""
-
-import yfinance as yf
 import pandas as pd
-import numpy as np
+import os
 
 
-def fetch_returns(ticker: str = "^GSPC", start: str = "2010-01-01", end: str = "2024-12-31") -> pd.Series:
-    """
-    Download daily adjusted close prices and compute log returns.
+DATA_PATH = "data/raw/voo_prices.csv"
 
-    Log returns are used (not simple) because they are:
-    - time-additive
-    - approximately normally distributed for short horizons
-    - standard in risk modelling
-    """
-    raw = yf.download(ticker, start=start, end=end, auto_adjust=True, progress=False)
-    prices = raw["Close"].dropna()
-    log_returns = np.log(prices / prices.shift(1)).dropna()
-    log_returns.name = ticker
-    return log_returns
+import pandas as pd
 
+import pandas as pd
 
-def split_train_test(series: pd.Series, train_ratio: float = 0.8):
-    """Split a time series into in-sample (train) and out-of-sample (test) windows."""
-    n = len(series)
-    cutoff = int(n * train_ratio)
-    return series.iloc[:cutoff], series.iloc[cutoff:]
+def fetch_returns():
+    df = pd.read_csv("voo_prices.csv")
+
+    df.columns = df.columns.str.strip()
+
+    # standardise column names
+    df = df.rename(columns={
+        "Vol.": "Volume",
+        "Change %": "ChangePct"
+    })
+
+    # detect price column
+    if "Price" in df.columns:
+        price_col = "Price"
+    elif "Close" in df.columns:
+        price_col = "Close"
+    else:
+        raise ValueError(f"No usable price column found. Columns: {df.columns.tolist()}")
+
+    # clean numeric noise (important)
+    df[price_col] = (
+        df[price_col]
+        .astype(str)
+        .str.replace(",", "")
+        .str.replace("%", "")
+    )
+
+    df[price_col] = pd.to_numeric(df[price_col], errors="coerce")
+    df = df.dropna(subset=[price_col])
+
+    # if Date missing, assume already sorted time series
+    returns = df[price_col].pct_change().dropna()
+    returns.name = "VOO"
+
+    return returns
+
+def split_train_test(returns: pd.Series, train_ratio=0.8):
+    split_idx = int(len(returns) * train_ratio)
+
+    train = returns.iloc[:split_idx]
+    test = returns.iloc[split_idx:]
+
+    return train, test
